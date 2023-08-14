@@ -14,3 +14,6 @@ class Local:
     DATABASE_PASSWORD = 'postgres'
     DATABASE_PORT = 5432
     DATABASE_NAME = 'todo_app'
+
+    SECRET_KEY = "thiosafdsjfthisasd"
+
