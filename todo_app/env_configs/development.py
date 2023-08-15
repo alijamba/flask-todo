@@ -1,7 +1,13 @@
+"""
+environment file
+"""
 import os
 
 
 class Local:
+    """
+    environment class to initialize the variables
+    """
     # debug Mode : True/False
     DEBUG = True
 
@@ -16,4 +22,3 @@ class Local:
     DATABASE_NAME = 'todo_app'
 
     SECRET_KEY = "thiosafdsjfthisasd"
-
