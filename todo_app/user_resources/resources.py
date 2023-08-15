@@ -27,7 +27,7 @@ class UserResource(Resource):
         To get particular user
         :return: json
         """
-        user = User.query.filter_by(uuid=get_jwt_identity()['id']).first()
+        user = User.query.filter_by(uuid=get_jwt_identity()['uuid']).first()
         if not user:
             return make_response('User not found', 404)
         return jsonify({'title': user.uuid, 'description': user.name})
@@ -39,7 +39,7 @@ class UserResource(Resource):
         :param user_id_to_be_deleted: str
         :return: json
         """
-        logged_in_user = User.query.filter_by(uuid=get_jwt_identity()['id']).first()
+        logged_in_user = User.query.filter_by(uuid=get_jwt_identity()['uuid']).first()
         if logged_in_user and not logged_in_user.admin:
             return make_response("not admin. permission denied", 401)
 
@@ -61,7 +61,7 @@ class UserCreate(Resource):
         To get all users
         :return:
         """
-        logged_in_user = User.query.filter_by(uuid=get_jwt_identity()['id']).first()
+        logged_in_user = User.query.filter_by(uuid=get_jwt_identity()['uuid']).first()
         if logged_in_user and not logged_in_user.admin:
             return make_response("not admin. permission denied", 401)
 
@@ -127,7 +127,7 @@ class UserLoginResource(Resource):
             return make_response("user not found against username", 401)
 
         if check_password_hash(user_obj.password, password):
-            jwt_token = create_access_token(identity={"id":user_obj.uuid})
+            jwt_token = create_access_token(identity={"uuid": user_obj.uuid})
             return jsonify({"token": jwt_token})
 
         return make_response("invalid token", 401)

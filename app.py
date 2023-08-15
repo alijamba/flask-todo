@@ -5,9 +5,10 @@ from flask import Flask
 from flask_restful import Api
 from flask_jwt_extended import JWTManager
 from todo_app.data_access.sql_alchemy import register_sqlalchemy
-from todo_app.todo_resources.resources import TodoResource, TodoCreateResource
+from todo_app.todo_resources.resources import TodoResource, TodoCreateResource, TodoDecryptResource
 from todo_app.user_resources.resources import UserResource, UserCreate, UserLoginResource
 from todo_app.env_configs.development import Local
+from todo_app.encryption import encrypt_data, encrypt_data
 
 
 def create_app(config_object):
@@ -23,6 +24,7 @@ def create_app(config_object):
     flask_app.config.from_object(config_object)
     initialize_sqlalchemy(flask_app)
     api.add_resource(TodoResource, '/todo/<int:id>/')
+    api.add_resource(TodoDecryptResource, '/decrypt/')
     api.add_resource(TodoCreateResource, '/todo/')
     api.add_resource(UserResource, '/user/<int:id>/')
     api.add_resource(UserCreate, '/user/')
